@@ -3,12 +3,13 @@ connection: "lcg_pivotstream_poc"
 include: "*.view.lkml"         # include all views in this project
 include: "*.dashboard.lookml"  # include all dashboards in this project
 
-explore : OmniModel
+explore : CustomerTransactions
 {
 from:  transactions
+  case_sensitive: yes
   join: customers {
     view_label: "Customers"
-    sql_on: ${OmniModel.customer_seq}=${customers.customer_seq} ;;
+    sql_on: ${CustomerTransactions.customer_seq}=${customers.customer_seq} ;;
     relationship: many_to_one
   }
   join: shops {
@@ -18,7 +19,7 @@ from:  transactions
   }
   join: products {
     view_label: "Product"
-    sql_on: ${OmniModel.prod_id}=${products.prod_id} ;;
+    sql_on: ${CustomerTransactions.prod_id}=${products.prod_id} ;;
     relationship: many_to_one
   }
 }
