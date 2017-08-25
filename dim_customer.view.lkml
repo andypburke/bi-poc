@@ -12,6 +12,7 @@ view: customers {
   }
 
   dimension: brand_seq {
+    hidden: yes
     type: string
     sql: ${TABLE}.BRAND_SEQ ;;
   }
@@ -47,11 +48,13 @@ view: customers {
   }
 
   dimension: cust_shop_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.CUST_SHOP_ID ;;
   }
 
   dimension: customer_seq {
+    hidden: yes
     type: string
     sql: ${TABLE}.CUSTOMER_SEQ ;;
   }
@@ -62,6 +65,7 @@ view: customers {
   }
 
   dimension: dcms_src_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.DCMS_SRC_ID ;;
   }
@@ -112,6 +116,7 @@ view: customers {
   }
 
   dimension: ims_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.IMS_ID ;;
   }

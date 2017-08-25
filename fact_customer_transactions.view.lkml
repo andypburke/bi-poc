@@ -17,6 +17,7 @@ view: transactions {
   }
 
   dimension: bonus_seq {
+    hidden: yes
     type: string
     sql: ${TABLE}.bonus_seq ;;
   }
@@ -27,6 +28,7 @@ view: transactions {
   }
 
   dimension: campaign_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.campaign_id ;;
   }
@@ -57,11 +59,13 @@ view: transactions {
   }
 
   dimension: cust_shop_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.cust_shop_id ;;
   }
 
   dimension: customer_seq {
+    hidden: yes
     type: string
     sql: ${TABLE}.customer_seq ;;
   }
@@ -74,6 +78,7 @@ view: transactions {
   }
 
   dimension: dcms_src_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.dcms_src_id ;;
   }
@@ -139,6 +144,7 @@ view: transactions {
   }
 
   dimension: paymethod_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.paymethod_id ;;
   }
@@ -149,6 +155,7 @@ view: transactions {
   }
 
   dimension: prod_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.prod_id ;;
   }
@@ -173,11 +180,6 @@ view: transactions {
     type: number
     sql: cast(${TABLE}.struck_stakes as float64) ;;
   }
-
-#   dimension: struck_stakes {
-#     type: number
-#     sql: case when ${struck_stakes_raw}='0E-10' then 0 else ${struck_stakes_raw} end;;
-#   }
 
   dimension: trans_method {
     type: string
@@ -208,6 +210,9 @@ view: transactions {
     type: string
     sql: ${TABLE}.voucher_in ;;
   }
+
+
+# MEASURES
 
   measure: count {
     type: count

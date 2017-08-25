@@ -7,6 +7,7 @@ view: products {
   }
 
   dimension: prod_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.Prod_ID ;;
   }
