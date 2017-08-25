@@ -234,4 +234,21 @@ view: transactions {
     value_format_name: gbp
   }
 
+  measure: total_settled_stakes {
+    type: sum
+    sql: ${settled_stakes} ;;
+    value_format_name: gbp
+  }
+
+  measure: total_ggr {
+    type: sum
+    sql: ${gbp_ggr} ;;
+    value_format_name: gbp
+  }
+
+  measure: total_no_of_slips_settled {
+    type: sum
+    sql: ${no_of_slips_settled} ;;
+    value_format_name: id
+  }
 }
