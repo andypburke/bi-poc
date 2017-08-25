@@ -1,4 +1,4 @@
-view: dim_product {
+view: products {
   sql_table_name: etl.DimProduct ;;
 
   dimension: prod_group {

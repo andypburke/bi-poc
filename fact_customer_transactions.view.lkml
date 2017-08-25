@@ -1,4 +1,4 @@
-view: customer_transactions {
+view: transactions {
   sql_table_name: etl.FactCustomerTransactions ;;
 
   dimension: bet_method {

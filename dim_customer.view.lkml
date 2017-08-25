@@ -1,4 +1,4 @@
-view: dim_customer {
+view: customers {
   sql_table_name: etl.DimCustomer ;;
 
   dimension: account_status {

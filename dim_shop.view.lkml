@@ -1,4 +1,4 @@
-view: dim_shop {
+view: shops {
   sql_table_name: etl.DimShop ;;
 
   dimension: area {
@@ -66,6 +66,6 @@ view: dim_shop {
 
   measure: count {
     type: count
-    drill_fields: []
+    drill_fields: [shop]
   }
 }

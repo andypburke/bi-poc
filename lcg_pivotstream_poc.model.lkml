@@ -8,20 +8,20 @@ include: "*.dashboard"
 
 case_sensitive: no
 
-explore: customer_transactions {
-  join: dim_customer {
+explore: transactions {
+  join: customers {
     view_label: "Customers"
-    sql_on: ${customer_transactions.customer_seq}=${dim_customer.customer_seq} ;;
+    sql_on: ${transactions.customer_seq}=${customers.customer_seq} ;;
     relationship: many_to_one
   }
-  join: dim_shop {
+  join: shops {
     view_label: "Shops"
-    sql_on: ${dim_customer.mc_signup_shop}=${dim_shop.shop} ;;
+    sql_on: ${customers.mc_signup_shop}=${shops.shop} ;;
     relationship: one_to_one
   }
-  join: dim_product {
+  join: products {
     view_label: "Product"
-    sql_on: ${customer_transactions.prod_id}=${dim_product.prod_id} ;;
+    sql_on: ${transactions.prod_id}=${products.prod_id} ;;
     relationship: many_to_one
   }
 }
