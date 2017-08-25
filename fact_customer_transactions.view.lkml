@@ -232,18 +232,30 @@ view: transactions {
     type: sum
     sql: ${struck_stakes} ;;
     value_format_name: gbp
+    filters: {
+      field: struck_stakes
+      value: ">0.001"
+    }
   }
 
   measure: total_settled_stakes {
     type: sum
     sql: ${settled_stakes} ;;
     value_format_name: gbp
+    filters: {
+      field: struck_stakes
+      value: ">0.001"
+    }
   }
 
   measure: total_ggr {
     type: sum
     sql: ${gbp_ggr} ;;
     value_format_name: gbp
+    filters: {
+      field: struck_stakes
+      value: ">0.001"
+    }
   }
 
   measure: total_no_of_slips_settled {
