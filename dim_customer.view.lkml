@@ -288,7 +288,6 @@ view: dim_customer {
 
   measure: count {
     type: count
-    approximate_threshold: 100000
     drill_fields: [nom_de_plume_name, username, first_name, surname]
   }
 }

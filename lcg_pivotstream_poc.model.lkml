@@ -6,20 +6,22 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
-# NOTE: please see https://looker.com/docs/r/sql/bigquery?version=4.18
-# NOTE: for BigQuery specific considerations
+case_sensitive: no
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+explore: customer_transactions {
+  join: dim_customer {
+    view_label: "Customers"
+    sql_on: ${customer_transactions.customer_seq}=${dim_customer.customer_seq} ;;
+    relationship: many_to_one
+  }
+  join: dim_shop {
+    view_label: "Shops"
+    sql_on: ${dim_customer.mc_signup_shop}=${dim_shop.shop} ;;
+    relationship: one_to_one
+  }
+  join: dim_product {
+    view_label: "Product"
+    sql_on: ${customer_transactions.prod_id}=${dim_product.prod_id} ;;
+    relationship: many_to_one
+  }
+}
