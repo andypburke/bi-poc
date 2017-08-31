@@ -129,8 +129,8 @@ view: transactions {
   }
 
   dimension: no_of_slips_settled {
-    type: string
-    sql: ${TABLE}.no_of_slips_settled ;;
+    type: number
+    sql: cast(${TABLE}.no_of_slips_settled as float64) ;;
   }
 
   dimension: no_of_slips_struck {
@@ -166,8 +166,8 @@ view: transactions {
   }
 
   dimension: settled_stakes {
-    type: string
-    sql: ${TABLE}.settled_stakes ;;
+    type: number
+    sql: cast(${TABLE}.settled_stakes as float64) ;;
   }
 
   dimension: shop_struck {
@@ -226,16 +226,30 @@ view: transactions {
       field: struck_stakes
       value: ">0.001"
     }
+    drill_fields: [customer_seq,customers.signup_shop,total_struck_stakes]
   }
 
   measure: total_struck_stakes {
     type: sum
     sql: ${struck_stakes} ;;
     value_format_name: gbp
+    drill_fields: [customer_seq,customers.signup_shop,total_struck_stakes]
+  }
+
+  measure: average_struck_stakes {
+    type: average
+    sql: ${struck_stakes} ;;
+    value_format_name: gbp
   }
 
   measure: total_settled_stakes {
     type: sum
+    sql: ${settled_stakes} ;;
+    value_format_name: gbp
+  }
+
+  measure: average_settled_stakes {
+    type: average
     sql: ${settled_stakes} ;;
     value_format_name: gbp
   }
@@ -249,6 +263,7 @@ view: transactions {
   measure: total_no_of_slips_settled {
     type: sum
     sql: ${no_of_slips_settled} ;;
-    value_format_name: id
+    value_format_name: decimal_0
   }
+
 }

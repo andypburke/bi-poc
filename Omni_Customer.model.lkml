@@ -22,4 +22,8 @@ from:  transactions
     sql_on: ${CustomerTransactions.prod_id}=${products.prod_id} ;;
     relationship: many_to_one
   }
+  join: shop_info {
+    type: cross
+    relationship: one_to_one
+  }
 }
