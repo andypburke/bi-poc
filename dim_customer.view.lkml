@@ -166,10 +166,10 @@ view: customers {
     sql: ${TABLE}.MC_CUST_TYPE ;;
   }
 
-  dimension: mc_reg_date {
-    type: string
-    sql: ${TABLE}.MC_REG_DATE,10 ;;
-  }
+#   dimension: mc_reg_date {
+#     type: string
+#     sql: ${TABLE}.MC_REG_DATE,10 ;;
+#   }
 
   dimension: mc_signup_shop {
     type: string
@@ -291,16 +291,17 @@ view: customers {
     sql: ${TABLE}.USERNAME ;;
   }
 
+  dimension_group: mc_registration {
+    type: time
+    timeframes: [date, week, month, year, day_of_week, day_of_month]
+    sql: cast(substr(${TABLE}.mc_reg_date,1,10) as timestamp) ;;
+  }
+
+# MEASURES
+
   measure: count {
     type: count
     drill_fields: [nom_de_plume_name, username, first_name, surname]
-  }
-
-  dimension_group: mc_reg_date {
-    type: time
-    datatype: yyyymmdd
-    timeframes: [date, week, month, year, day_of_week, day_of_month]
-    sql: cast(replace(left(${TABLE}.mc_reg_date,10),'-','') as int64);;
   }
 
   measure: number_customers {

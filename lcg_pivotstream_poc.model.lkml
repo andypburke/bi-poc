@@ -30,3 +30,5 @@ explore: transactions {
   }
 
 }
+
+explore: customers {}
