@@ -168,7 +168,7 @@ view: customers {
 
   dimension: mc_reg_date {
     type: string
-    sql: ${TABLE}.MC_REG_DATE ;;
+    sql: ${TABLE}.MC_REG_DATE,10 ;;
   }
 
   dimension: mc_signup_shop {
@@ -294,5 +294,17 @@ view: customers {
   measure: count {
     type: count
     drill_fields: [nom_de_plume_name, username, first_name, surname]
+  }
+
+  dimension_group: mc_reg_date {
+    type: time
+    datatype: yyyymmdd
+    timeframes: [date, week, month, year, day_of_week, day_of_month]
+    sql: cast(replace(left(${TABLE}.mc_reg_date,10),'-','') as int64);;
+  }
+
+  measure: number_customers {
+    type: count_distinct
+    sql: ${username} ;;
   }
 }

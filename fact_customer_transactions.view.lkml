@@ -77,6 +77,7 @@ view: transactions {
     sql: cast(${TABLE}.date_id as int64);;
   }
 
+
   dimension: dcms_src_id {
     hidden: yes
     type: string
@@ -84,8 +85,8 @@ view: transactions {
   }
 
   dimension: gbp_ggr {
-    type: string
-    sql: ${TABLE}.gbp_ggr ;;
+    type: number
+    sql: cast(${TABLE}.gbp_ggr as float64) ;;
   }
 
   dimension: ims_vip_level_at_time {
@@ -130,7 +131,7 @@ view: transactions {
 
   dimension: no_of_slips_settled {
     type: string
-    sql: ${TABLE}.no_of_slips_settled ;;
+    sql: cast(${TABLE}.no_of_slips_settled as float64) ;;
   }
 
   dimension: no_of_slips_struck {
@@ -167,7 +168,7 @@ view: transactions {
 
   dimension: settled_stakes {
     type: string
-    sql: ${TABLE}.settled_stakes ;;
+    sql: cast(${TABLE}.settled_stakes as float64) ;;
   }
 
   dimension: shop_struck {
@@ -217,6 +218,11 @@ view: transactions {
   measure: count {
     type: count
     drill_fields: [username]
+  }
+
+  measure: number_customers {
+    type: count_distinct
+    sql: ${username} ;;
   }
 
   measure: active_customers {
