@@ -24,4 +24,9 @@ explore: transactions {
     sql_on: ${transactions.prod_id}=${products.prod_id} ;;
     relationship: many_to_one
   }
+  join: shop_info {
+    type: cross
+    relationship: one_to_one
+  }
+
 }
