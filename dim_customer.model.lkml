@@ -5,5 +5,7 @@ include: "*.dashboard.lookml"  # include all dashboards in this project
 
 
 
-view: dim_customer {
-}
+explore : DimCustomer
+{
+  from:  customers
+  }
