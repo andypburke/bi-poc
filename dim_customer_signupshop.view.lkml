@@ -67,7 +67,7 @@ view: customer_signupshop {
             )
 
         SELECT
-          customers.*
+          customers.*,
 
           shops.Area  AS Area,
           shops.Brand  AS Brand,
