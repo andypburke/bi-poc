@@ -48,4 +48,15 @@ explore: transactions {
 #   }
 }
 
-explore: customers {}
+explore: customers {
+  description: "Use this explore for Customer information without transactions"
+}
+
+explore: shops {
+  description: "Use this explore for Shops information without transactions"
+  join: shop_info {
+    view_label: "Shops"
+    type: cross
+    relationship: one_to_one
+  }
+}
