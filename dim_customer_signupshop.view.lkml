@@ -1,6 +1,6 @@
 view: customer_signupshop {
   derived_table: {
-#     datagroup_trigger: midnight_refresh
+    datagroup_trigger: midnight_refresh
 
     sql:
           WITH customers AS (
