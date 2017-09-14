@@ -1,5 +1,5 @@
 view: transactions {
-  sql_table_name: etl.FactCustomerTransactions ;;
+  sql_table_name: etl.FactCustomerTransactionsPartitioned ;;
 
   dimension: bet_method {
     type: string
@@ -72,10 +72,16 @@ view: transactions {
 
   dimension_group: transaction {
     type: time
-    datatype: yyyymmdd
-    timeframes: [date, week, month, year, day_of_week, day_of_month]
-    sql: cast(${TABLE}.date_id as int64);;
+    timeframes: [date,week,month,year,day_of_week, day_of_month]
+    sql: _PARTITIONTIME ;;
   }
+
+#   dimension_group: transaction {
+#     type: time
+#     datatype: yyyymmdd
+#     timeframes: [date, week, month, year, day_of_week, day_of_month]
+#     sql: cast(${TABLE}.date_id as int64);;
+#   }
 
 
   dimension: dcms_src_id {

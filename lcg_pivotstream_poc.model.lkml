@@ -8,17 +8,24 @@ include: "*.dashboard"
 
 case_sensitive: no
 
+datagroup: midnight_refresh {
+  sql_trigger: select CURRENT_DATE() ;;
+}
+
 explore: transactions {
-  join: customers {
-    view_label: "Customers"
-    sql_on: ${transactions.customer_seq}=${customers.customer_seq} ;;
+  always_filter: {
+    filters: {
+      field: transactions.transaction_date
+      value: "2017-06"
+    }
+  }
+
+  join: customer_signupshop {
+    #View label is applied at the dimension level
+    sql_on: ${transactions.customer_seq}=${customer_signupshop.customer_seq} ;;
     relationship: many_to_one
   }
-  join: shops {
-    view_label: "Shops"
-    sql_on: ${customers.mc_signup_shop}=${shops.shop} ;;
-    relationship: one_to_one
-  }
+
   join: products {
     view_label: "Product"
     sql_on: ${transactions.prod_id}=${products.prod_id} ;;
@@ -29,6 +36,16 @@ explore: transactions {
     relationship: one_to_one
   }
 
+#   join: customers {
+#     view_label: "Customers"
+#     sql_on: ${transactions.customer_seq}=${customers.customer_seq} ;;
+#     relationship: many_to_one
+#   }
+#   join: shops {
+#     view_label: "Shops"
+#     sql_on: ${customers.mc_signup_shop}=${shops.shop} ;;
+#     relationship: one_to_one
+#   }
 }
 
 explore: customers {}
