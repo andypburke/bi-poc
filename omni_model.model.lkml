@@ -64,9 +64,19 @@ explore: shops {
 
 explore: customers_shops_transactions {
   label: "Denormalized Transactions"
+  always_filter: {
+    filters: {
+      field: customers_shops_transactions.transaction_date
+      value: "2017-06"
+      }
+    }
   join: products {
     view_label: "Product"
     sql_on: ${customers_shops_transactions.prod_id}=${products.prod_id} ;;
     relationship: many_to_one
+  }
+  join: shop_info {
+    type: cross
+    relationship: one_to_one
   }
 }

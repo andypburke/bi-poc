@@ -14,7 +14,7 @@ view: shop_info {
   }
 
   filter: comparison_shop {
-    view_label: "Signup Shop"
+    view_label: "Customers Shops Transactions"
     type: string
   }
 

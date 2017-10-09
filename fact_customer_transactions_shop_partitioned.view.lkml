@@ -1,5 +1,10 @@
-view: customers_shops_transactions_old {
-  sql_table_name: etl.FactCustomerTransactionsShop ;;
+view: customers_shops_transactions {
+  sql_table_name: etl.FactCustomerTransactionsShopPartitioned ;;
+
+  dimension: area {
+    type: string
+    sql: ${TABLE}.Area ;;
+  }
 
   dimension: bet_method {
     type: string
@@ -41,6 +46,16 @@ view: customers_shops_transactions_old {
     sql: ${TABLE}.channel ;;
   }
 
+  dimension: competitive_flag {
+    type: string
+    sql: ${TABLE}.Competitive_flag ;;
+  }
+
+  dimension: competitive_group {
+    type: string
+    sql: ${TABLE}.Competitive_group ;;
+  }
+
   dimension: connect_flag {
     type: string
     sql: ${TABLE}.connect_flag ;;
@@ -66,18 +81,10 @@ view: customers_shops_transactions_old {
     sql: ${TABLE}.customer_seq ;;
   }
 
-  dimension_group: transaction_id {
-    type: time
-    datatype: yyyymmdd
-    timeframes: [date, week, month, year, day_of_week, day_of_month]
-    sql: cast(${TABLE}.date_id as int64);;
-  }
-
-  dimension_group: transaction {
-    type: time
-    timeframes: [date,week,month,year,day_of_week, day_of_month]
-    sql: _PARTITIONTIME ;;
-  }
+#   dimension: date_id {
+#     type: string
+#     sql: ${TABLE}.date_id ;;
+#   }
 
   dimension: dcms_src_id {
     type: string
@@ -86,12 +93,17 @@ view: customers_shops_transactions_old {
 
   dimension: gbp_ggr {
     type: string
-    sql: ${TABLE}.gbp_ggr ;;
+    sql: cast(${TABLE}.gbp_ggr as float64) ;;
   }
 
   dimension: ims_vip_level_at_time {
     type: string
     sql: ${TABLE}.ims_vip_level_at_time ;;
+  }
+
+  dimension: l4l_flag {
+    type: string
+    sql: ${TABLE}.l4l_flag ;;
   }
 
   dimension: logged_in {
@@ -119,6 +131,11 @@ view: customers_shops_transactions_old {
     sql: ${TABLE}.no_of_bonus_redemptions ;;
   }
 
+  dimension: no_of_competitors {
+    type: string
+    sql: ${TABLE}.No_of_competitors ;;
+  }
+
   dimension: no_of_deposits {
     type: string
     sql: ${TABLE}.no_of_deposits ;;
@@ -131,12 +148,17 @@ view: customers_shops_transactions_old {
 
   dimension: no_of_slips_settled {
     type: string
-    sql: ${TABLE}.no_of_slips_settled ;;
+    sql: cast(${TABLE}.no_of_slips_settled as float64) ;;
   }
 
   dimension: no_of_slips_struck {
     type: string
     sql: ${TABLE}.no_of_slips_struck ;;
+  }
+
+  dimension: no_of_ssbts {
+    type: string
+    sql: ${TABLE}.No_of_ssbts ;;
   }
 
   dimension: no_of_withdrawals {
@@ -153,6 +175,19 @@ view: customers_shops_transactions_old {
     type: string
     sql: ${TABLE}.platform ;;
   }
+
+  dimension: postcode {
+    type: string
+    sql: ${TABLE}.Postcode ;;
+  }
+
+  dimension: postcode_area {
+    type: string
+    sql: UPPER(
+      CASE WHEN REGEXP_CONTAINS(SUBSTR(${postcode}, 1, 2), "^*[0-9]") THEN SUBSTR(${postcode}, 1, 1)
+      ELSE SUBSTR(${postcode}, 1, 2) END)  ;;
+    map_layer_name: uk_postcode_areas
+    }
 
   dimension: prod_id {
     type: string
@@ -171,7 +206,17 @@ view: customers_shops_transactions_old {
 
   dimension: settled_stakes {
     type: string
-    sql: ${TABLE}.settled_stakes ;;
+    sql: cast(${TABLE}.settled_stakes as float64) ;;
+  }
+
+  dimension: shop {
+    type: string
+    sql: ${TABLE}.Shop ;;
+  }
+
+  dimension: shop_brand {
+    type: string
+    sql: ${TABLE}.shop_brand ;;
   }
 
   dimension: shop_struck {
@@ -179,14 +224,37 @@ view: customers_shops_transactions_old {
     sql: ${TABLE}.shop_struck ;;
   }
 
+  dimension: status {
+    type: string
+    sql: ${TABLE}.Status ;;
+  }
+
   dimension: struck_stakes {
     type: string
-    sql: ${TABLE}.struck_stakes ;;
+    sql: cast(${TABLE}.struck_stakes as float64) ;;
+  }
+
+  dimension: subregion {
+    type: string
+    sql: ${TABLE}.Subregion ;;
   }
 
   dimension: trans_method {
     type: string
     sql: ${TABLE}.trans_method ;;
+  }
+
+  dimension_group: transaction_id {
+    type: time
+    datatype: yyyymmdd
+    timeframes: [date, week, month, year, day_of_week, day_of_month]
+    sql: cast(${TABLE}.date_id as int64);;
+  }
+
+  dimension_group: transaction {
+    type: time
+    timeframes: [date,week,month,year,day_of_week, day_of_month]
+    sql: _PARTITIONTIME ;;
   }
 
   dimension: user_wallet {
@@ -213,6 +281,26 @@ view: customers_shops_transactions_old {
     type: string
     sql: ${TABLE}.voucher_in ;;
   }
+
+  dimension: shop_location_comparison {
+    type: string
+    sql:
+      CASE
+
+      WHEN  ${shop} = ${shop_info.shop}
+      THEN CONCAT('(1) ',${shop})
+
+      WHEN  ${area} = ${shop_info.area}
+      THEN CONCAT('(2) Rest of ',${area})
+
+      WHEN  ${region} = ${shop_info.region}
+      THEN CONCAT('(3) Rest of ',${region})
+
+      ELSE '(4) Rest Of Population'
+
+      END;;
+  }
+
 
   measure: count {
     type: count
