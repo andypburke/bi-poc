@@ -14,7 +14,7 @@ view: products {
 
   dimension: prod_major {
     type: string
-    sql: lower(${TABLE}.Prod_Major) ;;
+    sql: UPPER(${TABLE}.Prod_Major) ;;
   }
 
   dimension: prod_name {

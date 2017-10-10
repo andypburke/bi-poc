@@ -6,7 +6,7 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
-case_sensitive: no
+# case_sensitive: no
 
 datagroup: midnight_refresh {
   sql_trigger: select CURRENT_DATE() ;;
